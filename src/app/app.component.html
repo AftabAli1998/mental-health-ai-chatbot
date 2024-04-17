@@ -4,6 +4,7 @@
   >
     <div
       id="messages"
+      *ngIf="messages.length > 0"
       class="flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch"
     >
       <ng-container *ngFor="let message of messages; let key = index">
@@ -64,39 +65,73 @@
         </div>
       </div>
     </div>
-    <div class="border-t-2 border-gray-200 px-4 pt-4 mb-2 sm:mb-0">
-      <div class="relative flex">
-        <input
-          type="text"
-          #chatinput
-          placeholder="Talk to me; You are in a safe space!"
-          autocomplete="off"
-          autofocus="true"
-          (keydown.enter)="updateChat(chatinput)"
-          class="text-md w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-5 pr-16 bg-gray-100 border-2 border-gray-200 focus:border-blue-500 rounded-full py-2"
-          #input
-        />
-        <div class="absolute right-2 items-center inset-y-0 hidden sm:flex">
-          <button
-            type="button"
-            class="inline-flex items-center justify-center rounded-full h-8 w-8 transition duration-200 ease-in-out text-white bg-blue-500 hover:bg-blue-600 focus:outline-none"
-            (click)="updateChat(input)"
+    <div
+      *ngIf="messages.length === 0"
+      class="h-screen flex flex-col justify-center items-center"
+    >
+      <div class="absolute top-0 left-0 p-4">
+        <h1 class="text-5xl font-bold">Hey Zoey!</h1>
+        <p class="text-2xl mt-2">A friend to Lean on, Anytime!</p>
+      </div>
+      <div class="text-center">
+        <h2 class="mb-5 text-3xl font-bold">How are you feeling today?</h2>
+      </div>
+    </div>
+    <div class="flex-col justify-center items-center">
+      <div
+        *ngIf="messages.length === 0"
+        class="flex justify-center items-center gap-3 mb-4 flex-wrap"
+      >
+        <a
+          (click)="handleStartSuggestionClick(i)"
+          *ngFor="let startSuggestion of startSuggestions; let i = index"
+          class="px-6 py-2 flex justify-center items-center bg-white cursor-pointer border-2 border-blue-500 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+        >
+          <h5
+            class="mb-2 text-center text-xl font-medium tracking-tight text-gray-900 dark:text-white"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+            {{ startSuggestion }}
+          </h5>
+        </a>
+      </div>
+      <div class="border-t-2 border-gray-200 px-4 pt-4 mb-2 sm:mb-0">
+        <div class="relative flex">
+          <input
+            type="text"
+            #chatinput
+            placeholder="Talk to me; You are in a safe space!"
+            autocomplete="off"
+            autofocus="true"
+            (keydown.enter)="updateChat(chatinput)"
+            class="text-md w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-5 pr-16 bg-gray-100 border-2 border-gray-200 focus:border-blue-500 rounded-full py-2"
+            #input
+          />
+          <div class="absolute right-2 items-center inset-y-0 hidden sm:flex">
+            <button
+              type="button"
+              *ngIf="!botTyping"
+              class="inline-flex items-center justify-center rounded-full h-8 w-8 transition duration-200 ease-in-out text-white bg-blue-500 hover:bg-blue-600 focus:outline-none"
+              (click)="updateChat(input)"
             >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M9 5l7 7-7 7"
-              />
-            </svg>
-          </button>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </button>
+            <div *ngIf="botTyping" class="round-progress-bar">
+              <div class="spinner"></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

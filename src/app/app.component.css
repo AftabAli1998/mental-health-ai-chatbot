@@ -1,0 +1,21 @@
+.round-progress-bar {
+  position: relative;
+  width: 32px; /* Adjust as needed */
+  height: 32px; /* Adjust as needed */
+}
+
+.spinner {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-top-color: rgb(59 130 246 / 1);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
