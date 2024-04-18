@@ -14,8 +14,7 @@
         <div>
           <svg
             class="w-6 h-6 fill-current text-yellow-500"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
+            style="margin-top: 12px"
           >
             <path d="M0 0h24v24H0V0z" fill="none" />
             <path
@@ -64,14 +63,35 @@
                         'rounded-br-none bg-blue-500 text-white':
                           message.from !== 'bot'
                       }"
-                      [innerHTML]="message.text"
-                    ></span>
+                      ><div [innerHTML]="message.text"></div>
+                      <span *ngIf="message.enableScale"
+                        ><br />Please select a number between 1 and 10 : </span
+                      ><select
+                        class="border-blue-500 border-2 rounded-lg px-2 focus:border-blue-500 focus:outline-none"
+                        *ngIf="message.enableScale"
+                        #scale
+                        [id]="message.screeningQuestionId"
+                        (change)="
+                          mentalHealthScreeningQuestionAnswerSelected(
+                            scale,
+                            message.screeningQuestionId
+                          )
+                        "
+                      >
+                        <option value="" disabled selected>
+                          Please select
+                        </option>
+                        <option *ngFor="let number of numbers" [value]="number">
+                          {{ number }}
+                        </option>
+                      </select></span
+                    >
                   </div>
                 </div>
                 <img
                   [src]="
                     message.from === 'bot'
-                      ? 'https://cdn.icon-icons.com/icons2/1371/PNG/512/robot02_90810.png'
+                      ? '../assets/favicon.ico.jpg'
                       : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmhjuzX_MetFn5xi8007XsRyX8X9_doXQDuMdaiX4DpUAZQdCW-jrn92jAVvE-iCPfvqY&usqp=CAU'
                   "
                   alt=""
