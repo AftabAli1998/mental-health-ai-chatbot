@@ -1,135 +1,171 @@
-<div x-data="chatBot()">
+<div id="divContainer">
   <div
-    class="flex-1 p-2 sm:p-6 justify-between flex flex-col h-screen bg-white"
+    id="divleftContainer"
+    class="h-screen float-left border-r-2 border-gray-200 rounded-lg shadow bg-white"
+    style="width: 19%"
   >
-    <div
-      id="messages"
-      *ngIf="messages.length > 0"
-      class="flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch"
-    >
-      <ng-container *ngFor="let message of messages; let key = index">
+    <img
+      style="margin-left: auto; margin-right: auto; width: 50%"
+      src="data:image/png;base64,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"
+      alt="Red dot"
+    />
+    <div class="w-full mx-auto absolute" style="bottom: 0px; width: inherit">
+      <div class="flex border-r-2 p-5 rounded-lg shadow bg-white">
         <div>
-          <div
-            class="flex items-end"
-            [ngClass]="{ 'justify-end': message.from !== 'bot' }"
+          <svg
+            class="w-6 h-6 fill-current text-yellow-500"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
           >
-            <div
-              class="flex flex-col space-y-2 text-md leading-tight max-w-lg mx-2"
-              [ngClass]="{
-                'order-2 items-start': message.from === 'bot',
-                'order-1 items-end': message.from !== 'bot'
-              }"
-            >
-              <div>
-                <span
-                  class="px-4 py-3 rounded-xl inline-block"
+            <path d="M0 0h24v24H0V0z" fill="none" />
+            <path
+              d="M12 5.99L19.53 19H4.47L12 5.99M12 2L1 21h22L12 2zm1 14h-2v2h2v-2zm0-6h-2v4h2v-4z"
+            />
+          </svg>
+        </div>
+        <div class="ml-3">
+          <p class="mt-2 text-sm text-gray-600 leading-relaxed">
+            Our chatbot offers general mental health support, but it's not a
+            replacement for professional advice.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="divRightContainer" class="float-right" style="width: 80%">
+    <div x-data="chatBot()">
+      <div
+        class="flex-1 p-2 sm:p-6 justify-between flex flex-col h-screen bg-white w-full"
+      >
+        <div
+          id="messages"
+          *ngIf="messages.length > 0"
+          class="flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch"
+        >
+          <ng-container *ngFor="let message of messages; let key = index">
+            <div>
+              <div
+                class="flex items-end"
+                [ngClass]="{ 'justify-end': message.from !== 'bot' }"
+              >
+                <div
+                  class="flex flex-col space-y-2 text-md leading-tight max-w-lg mx-2"
                   [ngClass]="{
-                    'rounded-bl-none bg-gray-100 text-gray-600':
-                      message.from === 'bot',
-                    'rounded-br-none bg-blue-500 text-white':
-                      message.from !== 'bot'
+                    'order-2 items-start': message.from === 'bot',
+                    'order-1 items-end': message.from !== 'bot'
                   }"
-                  [innerHTML]="message.text"
-                ></span>
+                >
+                  <div>
+                    <span
+                      class="px-4 py-3 rounded-xl inline-block"
+                      [ngClass]="{
+                        'rounded-bl-none bg-gray-100 text-gray-600':
+                          message.from === 'bot',
+                        'rounded-br-none bg-blue-500 text-white':
+                          message.from !== 'bot'
+                      }"
+                      [innerHTML]="message.text"
+                    ></span>
+                  </div>
+                </div>
+                <img
+                  [src]="
+                    message.from === 'bot'
+                      ? 'https://cdn.icon-icons.com/icons2/1371/PNG/512/robot02_90810.png'
+                      : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmhjuzX_MetFn5xi8007XsRyX8X9_doXQDuMdaiX4DpUAZQdCW-jrn92jAVvE-iCPfvqY&usqp=CAU'
+                  "
+                  alt=""
+                  class="w-6 h-6 rounded-full"
+                  [ngClass]="{
+                    'order-1': message.from === 'bot',
+                    'order-2': message.from !== 'bot'
+                  }"
+                />
               </div>
             </div>
-            <img
-              [src]="
-                message.from === 'bot'
-                  ? 'https://cdn.icon-icons.com/icons2/1371/PNG/512/robot02_90810.png'
-                  : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmhjuzX_MetFn5xi8007XsRyX8X9_doXQDuMdaiX4DpUAZQdCW-jrn92jAVvE-iCPfvqY&usqp=CAU'
-              "
-              alt=""
-              class="w-6 h-6 rounded-full"
-              [ngClass]="{
-                'order-1': message.from === 'bot',
-                'order-2': message.from !== 'bot'
-              }"
-            />
-          </div>
-        </div>
-      </ng-container>
-      <div [style.display]="botTyping ? 'flex' : 'none'">
-        <div class="flex items-end">
-          <div
-            class="flex flex-col space-y-2 text-md leading-tight mx-2 order-2 items-start"
-          >
-            <div>
-              <img
-                src="https://support.signal.org/hc/article_attachments/360016877511/typing-animation-3x.gif"
-                alt="..."
-                class="w-16 ml-6"
-              />
+          </ng-container>
+          <div [style.display]="botTyping ? 'flex' : 'none'">
+            <div class="flex items-end">
+              <div
+                class="flex flex-col space-y-2 text-md leading-tight mx-2 order-2 items-start"
+              >
+                <div>
+                  <img
+                    src="https://support.signal.org/hc/article_attachments/360016877511/typing-animation-3x.gif"
+                    alt="..."
+                    class="w-16 ml-6"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div
-      *ngIf="messages.length === 0"
-      class="h-screen flex flex-col justify-center items-center"
-    >
-      <div class="absolute top-0 left-0 p-4">
-        <h1 class="text-5xl font-bold">Hey Zoey!</h1>
-        <p class="text-2xl mt-2">A friend to Lean on, Anytime!</p>
-      </div>
-      <div class="text-center">
-        <h2 class="mb-5 text-3xl font-bold">How are you feeling today?</h2>
-      </div>
-    </div>
-    <div class="flex-col justify-center items-center">
-      <div
-        *ngIf="messages.length === 0"
-        class="flex justify-center items-center gap-3 mb-4 flex-wrap"
-      >
-        <a
-          (click)="handleStartSuggestionClick(i)"
-          *ngFor="let startSuggestion of startSuggestions; let i = index"
-          class="px-6 py-2 flex justify-center items-center bg-white cursor-pointer border-2 border-blue-500 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
-        >
-          <h5
-            class="mb-2 text-center text-xl font-medium tracking-tight text-gray-900 dark:text-white"
+        <div *ngIf="messages.length === 0" class="h-screen">
+          <div class="top-0 left-0 p-4 not-sr-only">
+            <h1 class="text-5xl font-bold">Hey Zoey!</h1>
+            <p class="text-2xl mt-2">A friend to Lean on, Anytime!</p>
+          </div>
+          <div class="text-center">
+            <h2 class="mb-5 text-3xl font-bold">How are you feeling today?</h2>
+          </div>
+        </div>
+        <div class="flex-col justify-center items-center">
+          <div
+            *ngIf="messages.length === 0"
+            class="flex justify-center items-center gap-3 mb-4 flex-wrap"
           >
-            {{ startSuggestion }}
-          </h5>
-        </a>
-      </div>
-      <div class="border-t-2 border-gray-200 px-4 pt-4 mb-2 sm:mb-0">
-        <div class="relative flex">
-          <input
-            type="text"
-            #chatinput
-            placeholder="Talk to me; You are in a safe space!"
-            autocomplete="off"
-            autofocus="true"
-            (keydown.enter)="updateChat(chatinput)"
-            class="text-md w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-5 pr-16 bg-gray-100 border-2 border-gray-200 focus:border-blue-500 rounded-full py-2"
-            #input
-          />
-          <div class="absolute right-2 items-center inset-y-0 hidden sm:flex">
-            <button
-              type="button"
-              *ngIf="!botTyping"
-              class="inline-flex items-center justify-center rounded-full h-8 w-8 transition duration-200 ease-in-out text-white bg-blue-500 hover:bg-blue-600 focus:outline-none"
-              (click)="updateChat(input)"
+            <a
+              (click)="handleStartSuggestionClick(i)"
+              *ngFor="let startSuggestion of startSuggestions; let i = index"
+              class="px-6 py-2 flex justify-center items-center bg-white cursor-pointer border-2 border-blue-500 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
+              <h5
+                class="mb-2 text-center text-xl font-medium tracking-tight text-gray-900 dark:text-white"
               >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
-            </button>
-            <div *ngIf="botTyping" class="round-progress-bar">
-              <div class="spinner"></div>
+                {{ startSuggestion }}
+              </h5>
+            </a>
+          </div>
+          <div class="border-t-2 border-gray-200 px-4 pt-4 mb-2 sm:mb-0">
+            <div class="relative flex">
+              <input
+                type="text"
+                #chatinput
+                placeholder="Talk to me; You are in a safe space!"
+                autocomplete="off"
+                autofocus="true"
+                (keydown.enter)="updateChat(chatinput)"
+                class="text-md w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-5 pr-16 bg-gray-100 border-2 border-gray-200 focus:border-blue-500 rounded-full py-2"
+                #input
+              />
+              <div
+                class="absolute right-2 items-center inset-y-0 hidden sm:flex"
+              >
+                <button
+                  type="button"
+                  *ngIf="!botTyping"
+                  class="inline-flex items-center justify-center rounded-full h-8 w-8 transition duration-200 ease-in-out text-white bg-blue-500 hover:bg-blue-600 focus:outline-none"
+                  (click)="updateChat(input)"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </button>
+                <div *ngIf="botTyping" class="round-progress-bar">
+                  <div class="spinner"></div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
